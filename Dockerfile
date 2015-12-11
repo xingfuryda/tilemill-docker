@@ -10,16 +10,21 @@ FROM phusion/baseimage:0.9.17
 MAINTAINER xingfuryda
 
 # install packages
-RUN apt-get update -y
-RUN apt-get install -y nodejs-legacy npm build-essential g++ git ttf-unifont ttf-dejavu fonts-freefont-otf
+RUN apt-get update -yq
+RUN apt-get install -yq nodejs-legacy npm build-essential g++ git libgtk2.0-dev ttf-unifont ttf-dejavu fonts-freefont-otf
 
 # build tilemill
-RUN mkdir /var/www && cd /var/www && git clone https://github.com/mapbox/tilemill.git && cd tilemill && npm install
+RUN adduser tmuser
+RUN chmod 700 /home/tmuser
+RUN chown tmuser.tmuser /home/tmuser
+USER tmuser
+RUN cd /home/tmuser && git clone https://github.com/mapbox/tilemill.git && cd tilemill && npm install
 
 # force qs version 5.2.0
-RUN cd /var/www/tilemill/node_modules/connect && rm -rf node_modules
-RUN sed 's/>= 0.4.0/5.2.0/' /var/www/tilemill/node_modules/connect/package.json | tee /var/www/tilemill/node_modules/connect/package.json
-RUN cd /var/www/tilemill/node_modules/connect && npm install
+RUN cd /home/tmuser/tilemill/node_modules/connect && rm -rf node_modules
+RUN sed -i 's/>= 0.4.0/5.2.0/' /home/tmuser/tilemill/node_modules/connect/package.json
+RUN cd /home/tmuser/tilemill/node_modules/connect && npm install
+USER root
 
 # Create a `tilemill` `runit` service
 ADD tilemill /etc/sv/tilemill
