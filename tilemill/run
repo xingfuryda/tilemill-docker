@@ -1,0 +1,7 @@
+#!/bin/sh
+
+##
+# Runit run script for the tilemill nodejs app
+#
+
+/var/www/tilemill/index.js --server=true --listenHost=0.0.0.0 --coreUrl=localhost:20009 --tileUrl=localhost:20008 2>&1

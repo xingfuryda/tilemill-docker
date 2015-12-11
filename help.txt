@@ -1,0 +1,15 @@
+Usage: run [COMMAND ...]
+
+Run Tilemill related operations in a docker container.
+
+Positional arguments:
+  COMMAND          The command to run. (default: help)
+
+Commands:
+  help             Show this help message
+  starttm		   Starts the tilemill web service onport 20009
+  
+Drop into a shell:
+  docker run --name osmdebug --rm -t -i -v /data:/tmp xingfuryda/tilemill-docker bash
+
+For further information run the cli and look at /usr/local/share/doc/README.md.
