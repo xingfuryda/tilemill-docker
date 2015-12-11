@@ -11,7 +11,7 @@ MAINTAINER xingfuryda
 
 # install packages
 RUN apt-get update -y
-RUN apt-get install -y nodejs-legacy npm build-essential g++ git ttf-unifont ttf-dejavu ubuntu-font-family msttcorefonts fonts-freefont-otf
+RUN apt-get install -y nodejs-legacy npm build-essential g++ git ttf-unifont ttf-dejavu fonts-freefont-otf
 
 # build tilemill
 RUN cd /var/www && git clone https://github.com/mapbox/tilemill.git && cd tilemill && npm install
