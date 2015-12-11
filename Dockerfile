@@ -14,7 +14,7 @@ RUN apt-get update -y
 RUN apt-get install -y nodejs-legacy npm build-essential g++ git ttf-unifont ttf-dejavu fonts-freefont-otf
 
 # build tilemill
-RUN cd /var/www && git clone https://github.com/mapbox/tilemill.git && cd tilemill && npm install
+RUN mkdir /var/www && cd /var/www && git clone https://github.com/mapbox/tilemill.git && cd tilemill && npm install
 
 # force qs version 5.2.0
 RUN cd /var/www/tilemill/node_nodules/connect && rm -rf node_modules && sed 's/>= 0.4.0/5.2.0/' package.json | tee package.json && npm install
