@@ -18,7 +18,8 @@ RUN adduser tmuser
 RUN chmod 700 /home/tmuser
 RUN chown tmuser.tmuser /home/tmuser
 USER tmuser
-RUN cd /home/tmuser && git clone https://github.com/mapbox/tilemill.git && cd tilemill && npm install
+RUN cd /home/tmuser && git clone https://github.com/mapbox/tilemill.git && cd tilemill && git checkout 8044976d3d0a1b78de663c24009239994db76b7b .
+RUN cd /home/tmuser/tilemill && npm install
 
 # force qs version 5.2.0
 RUN cd /home/tmuser/tilemill/node_modules/connect && rm -rf node_modules
@@ -34,11 +35,9 @@ RUN update-service --add /etc/sv/tilemill
 # Clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Expose the webserver port
+# Expose the webserver ports
+EXPOSE 20008
 EXPOSE 20009
-
-# We need the volume for importing data from
-VOLUME ["/data"]
 
 # Add the README
 ADD README.md /usr/local/share/doc/
@@ -51,6 +50,3 @@ ADD help.txt /usr/local/share/doc/run/help.txt
 ADD run.sh /usr/local/sbin/run
 RUN chmod +x /usr/local/sbin/run
 ENTRYPOINT ["/sbin/my_init", "--", "/usr/local/sbin/run"]
-
-# Default to showing the usage text
-CMD ["help"]
