@@ -14,18 +14,19 @@ RUN apt-get update -yq
 RUN apt-get install -yq nodejs-legacy npm build-essential g++ git libgtk2.0-dev ttf-unifont ttf-dejavu fonts-freefont-otf
 
 # build tilemill
-RUN adduser tmuser
-RUN chmod 700 /home/tmuser
-RUN chown tmuser.tmuser /home/tmuser
-USER tmuser
-RUN cd /home/tmuser && git clone https://github.com/mapbox/tilemill.git && cd tilemill && git checkout 8044976d3d0a1b78de663c24009239994db76b7b .
-RUN cd /home/tmuser/tilemill && npm install
+# RUN adduser tmuser
+# RUN chmod 700 /home/tmuser
+# RUN chown tmuser.tmuser /home/tmuser
+# USER tmuser
+RUN mkdir /home/root
+RUN cd /home/root && git clone https://github.com/mapbox/tilemill.git && cd tilemill && git checkout 8044976d3d0a1b78de663c24009239994db76b7b .
+RUN cd /home/root/tilemill && npm install
 
 # force qs version 5.2.0
-RUN cd /home/tmuser/tilemill/node_modules/connect && rm -rf node_modules
-RUN sed -i 's/>= 0.4.0/5.2.0/' /home/tmuser/tilemill/node_modules/connect/package.json
-RUN cd /home/tmuser/tilemill/node_modules/connect && npm install
-USER root
+RUN cd /home/root/tilemill/node_modules/connect && rm -rf node_modules
+RUN sed -i 's/>= 0.4.0/5.2.0/' /home/root/tilemill/node_modules/connect/package.json
+RUN cd /home/root/tilemill/node_modules/connect && npm install
+# USER root
 
 # Create a `tilemill` `runit` service
 ADD tilemill /etc/sv/tilemill

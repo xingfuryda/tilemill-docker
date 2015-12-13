@@ -4,4 +4,4 @@
 # Runit run script for the tilemill nodejs app
 #
 
-chpst -u tmuser env 'HOME=/home/tmuser' /home/tmuser/tilemill/index.js --server=true --listenHost=0.0.0.0 --coreUrl=localhost:20009 --tileUrl=localhost:20008 2>&1
+chpst -u root env 'HOME=/home/root' /home/root/tilemill/index.js --server=true --listenHost=0.0.0.0 --coreUrl=localhost:20009 --tileUrl=localhost:20008 2>&1
