@@ -11,7 +11,7 @@ MAINTAINER xingfuryda
 
 # install packages
 RUN apt-get update -yq
-RUN apt-get install -yq nodejs-legacy npm build-essential g++ git libgtk2.0-dev ttf-unifont ttf-dejavu fonts-freefont-otf
+RUN apt-get install -yq nodejs-legacy npm build-essential g++ git libgtk2.0-dev ttf-dejavu fonts-droid ttf-unifont fonts-sipa-arundina fonts-sil-padauk fonts-khmeros ttf-indic-fonts-core fonts-taml-tscu ttf-kannada-fonts
 
 # build tilemill
 RUN mkdir /home/root
