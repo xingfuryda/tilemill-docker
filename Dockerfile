@@ -28,6 +28,10 @@ ADD tilemill /etc/sv/tilemill
 RUN chmod +x /etc/sv/tilemill/run
 RUN update-service --add /etc/sv/tilemill
 
+# Add environment variables for server addresses
+ENV COREURL core.tmserver.org
+ENV TILEURL tile.tmserver.org
+
 # Clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
